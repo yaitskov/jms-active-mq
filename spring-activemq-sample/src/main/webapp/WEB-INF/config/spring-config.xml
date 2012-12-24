@@ -16,8 +16,27 @@
 	<!-- Use Springs JNDI support to look up JMS Connection Factory and Queue definitions from the
 	     container. This means that specific connection details are not embedded in the application
 	 -->
-	<jee:jndi-lookup id="mqConnectionFactory" jndi-name="java:comp/env/jms/mqConnectionFactory" />
-	<jee:jndi-lookup id="testQueueOne" jndi-name="java:comp/env/jms/testQueueOne" />
+	<!--<jee:jndi-lookup id="mqConnectionFactory" jndi-name="java:comp/env/jms/mqConnectionFactory" />-->
+
+    <!--<bean id="XaFactory" class="org.apache.activemq.ActiveMQXAConnectionFactory">-->
+        <!--<property name="brokerURL" value="${broker.url}"/>-->
+    <!--</bean>-->
+
+    <bean id="mqConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL" value="tcp://localhost:61616?wireFormat.maxInactivityDuration=120000"/>
+    </bean>
+
+    <!--<jee:jndi-lookup id="brokerLocation" lookup-on-startup="true"-->
+                     <!--jndi-name="jms/brokerLocation" resource-ref="true" cache="true" />-->
+
+
+    <bean id="testQueueOne" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg value="TOPIC_NAME" />
+    </bean>
+    <!--<bean id="testQueueOne" class="org.apache.activemq.command.ActiveMQQueue">-->
+        <!--<property name="physicalName" value="bla.bla" />-->
+    <!--</bean>-->
+	<!--<jee:jndi-lookup id="testQueueOne" jndi-name="java:comp/env/jms/testQueueOne" />-->
 	<!--<jee:jndi-lookup id="testQueueTwo" jndi-name="java:comp/env/jms/testQueueTwo" />-->
 
 	<!-- DefaultMessageListenerConatiner is the Spring equivalent to an EJB Message Driven Bean.
@@ -49,6 +68,7 @@
      -->
 	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
 		<property name="connectionFactory" ref="mqConnectionFactory" />
+        <!--<property name="defaultDestinationName" value="bla.bal" />-->
 	</bean>
 
     <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
