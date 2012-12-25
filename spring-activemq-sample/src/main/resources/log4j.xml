@@ -20,26 +20,45 @@
         </layout>
     </appender>
 
-    <logger name="org.springframework.beans">
-        <level value="warn" />
-    </logger>
+    <!--<logger name="org.springframework.beans">-->
+        <!--<level value="warn" />-->
+    <!--</logger>-->
 
-    <logger name="org.springframework.web">
-        <level value="debug" />
-    </logger>
+    <!--<logger name="org.springframework.web">-->
+        <!--<level value="debug" />-->
+    <!--</logger>-->
 
-	<logger name="org.codehaus.jackson">
-        <level value="debug" />
-    </logger>
+	<!--<logger name="org.codehaus.jackson">-->
+        <!--<level value="debug" />-->
+    <!--</logger>-->
 
-	<logger name="com.blog.spring.jms">
-        <level value="debug" />
-    </logger>
+	<!--<logger name="com.blog.spring.jms">-->
+        <!--<level value="debug" />-->
+    <!--</logger>-->
 
+    <appender name="graylog" class="org.graylog.log.GraylogAppander">
+        <param name="graylogHost" value="log.dev.jelastic.com"/>
+        <param name="graylogPort" value="12201"/>
+        <param name="host" value="mini.me.com"/>
+        <param name="additionalFields" value='{"environment":"QA","application":"BigMama"}'/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %-5p %F:%L - %m%n"/>
+        </layout>
+    </appender>
+
+    <!--<appender name="gelf" class="gelf4j.log4j.GelfAppender">-->
+        <!--<param name="Threshold" value="DEBUG"/>-->
+        <!--<param name="host" value="127.0.0.1"/>-->
+        <!--<param name="port" value="11223"/>-->
+        <!--<param name="compressedChunking" value="false"/>-->
+        <!--<param name="defaultFields" value='{"environment": "DEV", "application": "MyAPP"}'/>-->
+        <!--<param name="additionalFields" value='{"thread_name": "threadName", "exception": "exception"}'/>-->
+    <!--</appender>-->
 
     <!-- Root Logger -->
     <root>
-        <priority value="info" />
+        <priority value="debug" />
+        <appender-ref ref="graylog"/>
         <appender-ref ref="console" />
     </root>
 

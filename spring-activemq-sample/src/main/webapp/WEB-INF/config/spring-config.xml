@@ -67,6 +67,7 @@
         <!--<property name="defaultDestinationName" value="${source.queue}"/>-->
         <!--dst is passed by handc-->
         <property name="sessionTransacted" value="true"/>
+        <property name="receiveTimeout" value="-1" />
     </bean>
 
 
